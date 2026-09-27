@@ -1,0 +1,21 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS initial Idle
+PASS debug stack initially Idle
+PASS D moves right in Move
+PASS walk speed
+PASS Shift run speed
+PASS release restores Idle
+PASS Space pushes Jump
+PASS jump raises body pivot
+PASS debug stack shows Jump over Idle
+PASS state label follows transition
+PASS landing pops Idle
+PASS debug stack follows landing pop
+PASS X enters Stagger
+PASS stagger animation restores Idle
+PASS F enters Attack
+PASS sword enabled during attack
+PASS attack completes and pops Idle
+PASS R spawns bullet
+RESULT 18 checks; 0 failures

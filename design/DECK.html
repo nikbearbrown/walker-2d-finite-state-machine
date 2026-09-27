@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Finite State Machine GDD deck</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- /gdd deck (via /gdd reverse, silent) · gate — unsigned at time of writing -->
+<style>
+:root{--bg:#faf9f5;--ink:#25354a;--muted:#5b6b7c;--teal:#287c68;--red:#d24e42;--card:#fffdf7;--rule:#daddd6}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:Helvetica,Arial,sans-serif}
+.slide{display:none;min-height:100vh;box-sizing:border-box;padding:56px 72px;max-width:1400px;margin:0 auto}
+.slide.on{display:block}
+h1{font-size:44px;margin:0 0 8px}h2{font-size:34px;margin:0 0 14px}
+.kicker{color:var(--muted);font-size:16px;letter-spacing:.04em;text-transform:uppercase;margin-bottom:18px}
+p,li{font-size:22px;line-height:1.4}li{margin:8px 0}
+.cap{color:var(--muted);font-size:15px;margin-top:6px}
+img,object{max-width:100%;max-height:62vh;border:1px solid var(--rule);background:#fff}
+.tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:14px;font-weight:700;margin-right:6px}
+.obs{background:#e3f1ec;color:var(--teal)}.miss{background:#fdece9;color:var(--red)}.inf{background:#eef1f4;color:var(--muted)}
+.prop{border:2px dashed var(--red);padding:10px 14px;border-radius:6px}
+table{border-collapse:collapse;font-size:18px;width:100%}td,th{border-bottom:1px solid var(--rule);padding:8px 10px;text-align:left;vertical-align:top}
+.zelda{border-left:6px solid var(--red);padding-left:18px}
+nav{position:fixed;bottom:14px;right:22px;color:var(--muted);font-size:14px}
+@media(max-width:800px){.slide{padding:24px 16px}h1{font-size:30px}h2{font-size:24px}p,li{font-size:17px}}
+</style></head><body>
+<section class="slide">
+<div class="kicker">walker-2d-finite-state-machine · recovered GDD 0.1.0 · 2026-09-27 · Zelda, silent · gate unsigned at time of writing</div>
+<h1>A state machine wearing a sword.</h1><p>Godot's Hierarchical Finite State Machine demo, retitled. A <b>tech demo</b> of the State pattern with a pushdown stack, not a game.</p><p><span class="tag obs">OBSERVED</span> <span class="tag inf">INFERRED</span> <span class="tag miss">MISSING</span></p><p class='cap'>No gate signed. No human playtest. → <a href='../GDD.md'>GDD.md</a></p>
+</section>
+<section class="slide">
+<div class="kicker">What exists · upstream art</div>
+<img src='../godot/screenshots/fsm-attack.png' alt='FSM attack'><p class='cap'>Upstream screenshot, 1280×720 (godot/README.md:32). Design art, not a Walker capture. Rendered frames are unverified.</p>
+</section>
+<section class="slide">
+<div class="kicker">State machine · §3</div>
+<object data='diagrams/state-machine.svg' type='image/svg+xml'></object>
+</section>
+<section class="slide">
+<div class="kicker">The idea worth filming · §4</div>
+<h2>Move → Jump → land back in Move</h2><p><span class="tag obs">OBSERVED</span> Jump is pushed on top of Move and pops back to it. The stack panel shows it live. <span class="tag inf">INFERRED</span> This is the pattern's whole lesson (PX-01 candidate).</p>
+</section>
+<section class="slide">
+<div class="kicker">Mechanic Mirage · §5 M-07</div>
+<h2>Combat code with nothing to hit</h2><ul><li><span class="tag obs">OBSERVED</span> Sword damage 1/1/3, but it only hurts bodies with a Health node, and none exist</li><li><span class="tag obs">OBSERVED</span> player take_damage calls a missing $Health</li><li><span class="tag obs">OBSERVED</span> Die node is unmapped in states_map</li></ul>
+</section>
+<section class="slide">
+<div class="kicker">Verified · §11</div>
+<p>29 headless checks: idle/move/run, jump push/pop, stagger, attack and 3-hit combo, bullet, debug stack. Not verified: damage, rendered frames, human play. Font license packaging is pending.</p>
+</section>
+<section class="slide">
+<div class="kicker">Open questions</div>
+<div class='prop'><p><b>Q-01</b> Finish or cut the dormant combat?</p><p><b>Q-04</b> Package the OFL font license</p><p>Q-02, Q-03, Q-05, Q-06 in decisions.md</p></div>
+</section>
+<section class="slide">
+<div class="kicker">Zelda's read</div>
+<div class='zelda'><p>Ghost Center plus a textbook Mechanic Mirage. Film the stack, not the sword.</p></div>
+</section>
+<nav><span id="n"></span> · arrows / space</nav>
+<script>
+const s=[...document.querySelectorAll('.slide')];let i=0;const n=document.getElementById('n');
+function go(k){s[i].classList.remove('on');i=Math.max(0,Math.min(s.length-1,k));s[i].classList.add('on');n.textContent=(i+1)+' / '+s.length;}
+document.addEventListener('keydown',e=>{if(['ArrowRight','ArrowDown',' ','PageDown'].includes(e.key)){e.preventDefault();go(i+1)}if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){e.preventDefault();go(i-1)}if(e.key==='Home')go(0);if(e.key==='End')go(s.length-1);});
+document.addEventListener('click',e=>{if(e.target.closest('a'))return;go(e.clientX>innerWidth/2?i+1:i-1)});
+go(0);
+</script>
+</body></html>

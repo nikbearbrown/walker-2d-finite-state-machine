@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="700" viewBox="0 0 1500 700" role="img" aria-labelledby="t d">
+<title id="t">Player pushdown state machine: walker-2d-finite-state-machine</title>
+<desc id="d">Base states Idle and Move swap in place; Jump, Stagger, Attack are pushed and pop 'previous'. Die exists as a node but is unmapped (dashed). S-01, S-02, M-01..M-04, M-07.</desc>
+<rect width="1500" height="700" fill="#faf9f5"/>
+<defs><marker id="a" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#25354a"/></marker><marker id="r" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#d24e42"/></marker></defs>
+<g font-family="Helvetica, Arial, sans-serif" fill="#25354a">
+<text x="40" y="50" font-size="30" font-weight="700">Player state machine · pushdown stack · S-01, S-02</text>
+<text x="40" y="78" font-size="15" fill="#5b6b7c">solid = observed (player_state_machine.gd, state_machine.gd) · dashed = present in code but unreachable</text>
+<rect x="60" y="120" width="560" height="420" rx="14" fill="none" stroke="#5b6b7c" stroke-width="1.5"/>
+<text x="80" y="150" font-size="16" fill="#5b6b7c">stack base: replaced in place (states_stack[0] = …)</text>
+<g stroke="#25354a" stroke-width="2.5" fill="#fffdf7"><ellipse cx="200" cy="330" rx="100" ry="50"/><ellipse cx="480" cy="330" rx="100" ry="50"/></g>
+<g font-size="20" font-weight="700" text-anchor="middle"><text x="200" y="337">IDLE</text><text x="480" y="337">MOVE</text></g>
+<g stroke="#25354a" stroke-width="2" fill="none" marker-end="url(#a)"><path d="M300 315 H375"/><path d="M380 350 H305"/></g>
+<g font-size="13" fill="#5b6b7c"><text x="300" y="300">input ≠ 0</text><text x="300" y="375">input = 0</text><text x="400" y="400">walk 450 · Shift run 700</text></g>
+<rect x="820" y="120" width="620" height="420" rx="14" fill="none" stroke="#5b6b7c" stroke-width="1.5"/>
+<text x="840" y="150" font-size="16" fill="#5b6b7c">pushed on top · finish emits "previous" → pop, no re-enter</text>
+<g stroke="#25354a" stroke-width="2.5" fill="#fffdf7"><ellipse cx="1130" cy="220" rx="130" ry="46"/><ellipse cx="1130" cy="330" rx="130" ry="46"/><ellipse cx="1130" cy="440" rx="130" ry="46"/></g>
+<g font-size="20" font-weight="700" text-anchor="middle"><text x="1130" y="227">JUMP</text><text x="1130" y="337">STAGGER</text><text x="1130" y="447">ATTACK</text></g>
+<g font-size="13" text-anchor="middle" fill="#5b6b7c"><text x="1130" y="250">height ≤ 0 → pop</text><text x="1130" y="360">anim finished → pop</text><text x="1130" y="470">3-hit combo · attack_finished → pop</text></g>
+<g stroke="#25354a" stroke-width="2" fill="none" marker-end="url(#a)"><path d="M620 250 H995"/><path d="M620 330 H995"/><path d="M620 420 H995"/><path d="M995 470 Q800 560 620 500"/></g>
+<g font-size="13" fill="#5b6b7c"><text x="660" y="240">Space (Idle/Move); from Move inherits speed</text><text x="660" y="320">X simulate_damage (any motion state)</text><text x="660" y="410">F: interrupts all but Attack/Stagger</text><text x="700" y="555">pop "previous": back to IDLE or MOVE</text></g>
+<ellipse cx="200" cy="620" rx="110" ry="40" fill="none" stroke="#d24e42" stroke-width="2.5" stroke-dasharray="10 7"/>
+<text x="200" y="626" font-size="18" font-weight="700" text-anchor="middle" fill="#d24e42">DIE</text>
+<text x="330" y="615" font-size="14" fill="#d24e42">node exists (Player.tscn:65) but not in states_map; emits "dead" (unmapped).</text>
+<text x="330" y="636" font-size="14" fill="#d24e42">No Health node, no damage source in scene · M-07, Q-01</text>
+</g>
+</svg>
